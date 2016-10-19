@@ -1,5 +1,5 @@
 // variables
-var theBody = document.getElementsByTagName("body");
+var thePage = document.getElementsByClassName("page");
 var listRoot = document.getElementById("student-list");
 var studentList = document.getElementsByClassName("student-item cf") ;
 var studentIndex = 0;
@@ -19,17 +19,21 @@ var addPagination = function(){
     var paginationDiv = document.createElement("div");
     paginationDiv.setAttribute("class","pagination");
     var pageNumbers = document.createElement("ul");
-    document.body.appendChild(paginationDiv);
+    thePage[0].appendChild(paginationDiv);
     paginationDiv.appendChild(pageNumbers);
     for (i=1; i<=numOfpages; i++){
         numButtonLabel = i.toString();
         numButton = document.createElement("li");
         numButton.innerHTML = "<a>" + numButtonLabel + "</a>";
         pageNumbers.appendChild(numButton);
+        upDatePagination(numButton);
     }
     
 };
-var upDatePagination = function(){};
+var upDatePagination = function(clickedButton){
+    clickedButton.addEventListener ("click", function(){console.log("I have been clicked!")});
+    }
+
 var addSearchWidget = function (){};
 var searchStudents = function(){};
 //main program logic
@@ -37,3 +41,4 @@ hideStudents(9,numOfstudents,studentList);
 if (numOfstudents >10){
     addPagination();
 } 
+ 
