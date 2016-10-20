@@ -31,14 +31,29 @@ var addPagination = function(){
     
 };
 var upDatePagination = function(clickedButton){
-    clickedButton.addEventListener ("click", function(){console.log("I have been clicked!")});
+    clickedButton.addEventListener ("click", function(){console.log(clickedButton.innerHTML)});
     }
+    
 
-var addSearchWidget = function (){};
+var addSearchWidget = function (){
+    var searchWidget = document.createElement("div");
+    searchWidget.setAttribute("class","student-search");
+    var searchField = document.createElement("input");
+    searchField.setAttribute("placeholder","Search for student..."); 
+    searchWidget.appendChild(searchField);
+    var searchButton = document.createElement("button");
+    searchButton.innerHTML = "Search";
+    searchWidget.appendChild(searchButton);
+    var theHeader = document.getElementsByClassName("page-header cf");
+    theHeader[0].appendChild(searchWidget);
+}
+
 var searchStudents = function(){};
 //main program logic
 hideStudents(9,numOfstudents,studentList);
 if (numOfstudents >10){
     addPagination();
 } 
+addSearchWidget();
+
  
