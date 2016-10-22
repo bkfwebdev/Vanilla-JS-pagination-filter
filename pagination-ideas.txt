@@ -1,0 +1,19 @@
+1 - 9 [n*10-1]
+2 - 19
+3 - 29
+4 - 39
+5 - 49
+
+0-9
+10 - 19
+20 - 29
+30 - 39
+40 – 49
+
+newPageBottom = button label value * 10 – 1
+newPageTop = currentPageBottom – 9
+
+on button click
+>hide current page
+>show new page
+>make new page current page

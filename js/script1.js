@@ -6,14 +6,19 @@ var studentIndex = 0;
 var numOfstudents = studentList.length - 1;
 var numOfpages = numOfstudents/10;
 var lastPage = numOfpages + 1; 
-var currentPage = 0;
+var currentPage = 1;
 // functions
 var hideStudents = function(a,b,list){
   for ( i=a ; i<=b ; i++){
     list[i].style.display = "none";
   }
 };
-var showStudents = function(a,b,list){};
+
+var showStudents = function(a,b,list){
+    for ( i=a ; i<=b ; i++){
+    list[i].style.display = "block";
+  }
+};
 
 var addPagination = function(){
     var paginationDiv = document.createElement("div");
@@ -26,14 +31,24 @@ var addPagination = function(){
         numButton = document.createElement("li");
         numButton.innerHTML = "<a>" + numButtonLabel + "</a>";
         pageNumbers.appendChild(numButton);
-        upDatePagination(numButton);
+        upDatePagination(numButton,numButtonLabel);
     }
     
 };
-var upDatePagination = function(clickedButton){
-    clickedButton.addEventListener ("click", function(){console.log(clickedButton.innerHTML)});
+var upDatePagination = function(clickedButton,label){
+    clickedButton.addEventListener ("click", function(){
+        //hide current page
+        bottomIndex = (currentPage * 10) - 1;
+        topIndex = bottomIndex - 9;
+        hideStudents(topIndex,bottomIndex,studentList);
+        //show new page
+        newBottom = (label * 10) - 1;
+        newTop = newBottom - 9;
+        showStudents(newTop,newBottom,studentList);
+        //make new page current page
+        currentPage = label;
+    })
     }
-    
 
 var addSearchWidget = function (){
     var searchWidget = document.createElement("div");
