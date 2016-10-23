@@ -8,6 +8,7 @@ var numOfpages = numOfstudents/10;
 var lastPage = numOfpages + 1; 
 var currentPage = 1;
 // functions
+
 var hideStudents = function(a,b,list){
   for ( i=a ; i<=b ; i++){
     list[i].style.display = "none";
@@ -55,13 +56,17 @@ var addSearchWidget = function (){
     searchWidget.setAttribute("class","student-search");
     var searchField = document.createElement("input");
     searchField.setAttribute("placeholder","Search for student..."); 
+    searchField.setAttribute("type","text");
+    searchField.setAttribute("id","searchString");
     searchWidget.appendChild(searchField);
     var searchButton = document.createElement("button");
     searchButton.innerHTML = "Search";
     searchWidget.appendChild(searchButton);
     var theHeader = document.getElementsByClassName("page-header cf");
     theHeader[0].appendChild(searchWidget);
-}
+    searchButton.addEventListener("click",function(){alert(searchString.value)});
+    };
+
 
 var searchStudents = function(){};
 //main program logic
