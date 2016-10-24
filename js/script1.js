@@ -64,7 +64,14 @@ var addSearchWidget = function (){
     searchWidget.appendChild(searchButton);
     var theHeader = document.getElementsByClassName("page-header cf");
     theHeader[0].appendChild(searchWidget);
-    searchButton.addEventListener("click",function(){alert(searchString.value)});
+    searchButton.addEventListener("click",function(){
+        var searchPattern = new regex(document.getElementById("searchSring").value);
+        var searchHit = null;
+        for (x = 0 ; x <= numOfstudents ; x++){
+            searchHit = searchPattern.test(studenList[x].textContent);
+            if(searchHit == true){console.log("hit at index",x);
+                                 }
+        }});
     };
 
 
@@ -75,5 +82,6 @@ if (numOfstudents >10){
     addPagination();
 } 
 addSearchWidget();
+    
 
  

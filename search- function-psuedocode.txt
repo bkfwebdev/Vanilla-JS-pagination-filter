@@ -1,0 +1,13 @@
+var searchPattern = new regex(searchSring);
+var searchHit = null;
+var searchResults = document.createElement("ul");
+for (x = 0; x<=numOfStudents; x++){ 
+searchHit = searchPattern.test(studenList[index].textContent);
+if searchHit is true clone the indexed node and add it to searchResults
+}
+searchResults is a created ul
+append search to body
+show search results
+hide student list
+if search button is clicked and search field is empty (place holder)
+show student list 
