@@ -65,13 +65,17 @@ var addSearchWidget = function (){
     var theHeader = document.getElementsByClassName("page-header cf");
     theHeader[0].appendChild(searchWidget);
     searchButton.addEventListener("click",function(){
-        var searchPattern = new regex(document.getElementById("searchSring").value);
-        var searchHit = null;
-        for (x = 0 ; x <= numOfstudents ; x++){
-            searchHit = searchPattern.test(studenList[x].textContent);
-            if(searchHit == true){console.log("hit at index",x);
-                                 }
-        }});
+       var searchTarget = searchString.value;
+        var searchCompare = RegExp(searchTarget);
+        var listTarget = "";
+        var searchHit = null; 
+        var hitList = []
+        for (x = 0; x <= numOfstudents; x++){
+            listTarget = studentList[x].textContent;
+            if (searchCompare.test(listTarget) == true){alert("got'em @ "+ x)}
+        }
+    
+    });
     };
 
 
