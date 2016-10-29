@@ -68,13 +68,24 @@ var addSearchWidget = function (){
        var searchTarget = searchString.value;
         var searchCompare = RegExp(searchTarget);
         var listTarget = "";
-        var searchHit = null; 
+        var searchHit = 0; 
         var hitList = []
         for (x = 0; x <= numOfstudents; x++){
             listTarget = studentList[x].textContent;
-            if (searchCompare.test(listTarget) == true){alert("got'em @ "+ x)}
+            if (searchCompare.test(listTarget) == true){
+                hitList[searchHit] = x;
+                searchHit = searchHit + 1;
+               
+            }
+            
         }
-    
+        hideStudents(0,numOfstudents,studentList)
+     console.log(hitList);
+            console.log(hitList.length);
+        var limit = hitList.length - 1;
+        for (y=0; y <= limit; y++){
+        studentList[hitList[y]].style.display = "block";
+        }
     });
     };
 
@@ -86,6 +97,3 @@ if (numOfstudents >10){
     addPagination();
 } 
 addSearchWidget();
-    
-
- 
