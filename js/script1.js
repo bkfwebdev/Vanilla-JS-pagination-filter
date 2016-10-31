@@ -4,8 +4,8 @@ var listRoot = document.getElementById("student-list");
 var studentList = document.getElementsByClassName("student-item cf");
 var studentIndex = 0;
 var numOfstudents = studentList.length - 1;
-var numOfpages = numOfstudents / 10;
-var lastPage = numOfpages + 1;
+var numOfpages = Math.floor(numOfstudents / 10);
+var lastPage = numOfpages + 1; 
 var currentPage = 1;
 // functions
 
@@ -34,6 +34,19 @@ var addPagination = function() {
         pageNumbers.appendChild(numButton);
         upDatePagination(numButton, numButtonLabel);
     }
+    pageCheck = numOfstudents  % 10;
+    if (pageCheck != 0){
+        var lastPageLink = document.createElement("li");
+        var lastPageNum = numOfpages + 1;
+        var lastPageBottom = numOfstudents;
+        var lastPageTop = lastPageBottom - pageCheck; 
+        lastPageLink.innerHTML =  "<a>" + lastPageNum + "<a/>";
+        pageNumbers.appendChild(lastPageLink);
+        lastPageLink.addEventListener("click",function(){
+                                      hideStudents(0,numOfstudents,studentList);
+        showStudents(lastPageTop,lastPageBottom,studentList);
+                                      });
+    };
 
 };
 var upDatePagination = function(clickedButton, label) {
@@ -98,8 +111,9 @@ var addSearchWidget = function() {
 
 var searchStudents = function() {};
 //main program logic
-hideStudents(9, numOfstudents, studentList);
+
 if (numOfstudents > 10) {
     addPagination();
+    hideStudents(9, numOfstudents, studentList);
+    addSearchWidget();
 }
-addSearchWidget();
