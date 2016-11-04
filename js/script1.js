@@ -89,16 +89,17 @@ var addSearchWidget = function() {
         if (searchTarget == ""){
             var bottomReset = currentPage * 10 - 1;
             var topReset = bottomReset - 9;
-            hideStudents(topReset,bottomReset,studentList);
+            hideStudents(0,52,studentList);
             showStudents(0,9,studentList);
             currentPage = 1;
+            
             
           
         } else {
         var searchCompare = RegExp(searchTarget);
         var listTarget = "";
         var searchHit = 0;
-        var hitList = []
+        var hitList = [];
         for (x = 0; x <= maxIndex; x++) {
             listTarget = studentList[x].textContent;
             if (searchCompare.test(listTarget) == true) {
