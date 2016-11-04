@@ -1,60 +1,47 @@
 // variables
 var thePage = document.getElementsByClassName("page");
+var listRoot = document.getElementById("student-list");
 var studentList = document.getElementsByClassName("student-item cf");
-var numOfstudents = studentList.length;
-var maxIndex = numOfstudents - 1;
-var numOfpages = Math.floor(numOfstudents / 10);
+var studentIndex = 0;
+var numOfstudents = studentList.length - 1;
+var numOfpages = numOfstudents / 10;
+var lastPage = numOfpages + 1;
 var currentPage = 1;
-var extraPage = numOfpages + 1;
-var overFlow = numOfstudents % 10;
 // functions
+
 var hideStudents = function(a, b, list) {
     for (i = a; i <= b; i++) {
         list[i].style.display = "none";
-       }
+    }
 };
+
 var showStudents = function(a, b, list) {
     for (i = a; i <= b; i++) {
         list[i].style.display = "block";
     }
 };
- var addPagination = function() {
+
+var addPagination = function() {
     var paginationDiv = document.createElement("div");
     paginationDiv.setAttribute("class", "pagination");
     var pageNumbers = document.createElement("ul");
     thePage[0].appendChild(paginationDiv);
     paginationDiv.appendChild(pageNumbers);
     for (i = 1; i <= numOfpages; i++) {
-        var numButtonLabel = i.toString();
-        var numButton = document.createElement("li");
+        numButtonLabel = i.toString();
+        numButton = document.createElement("li");
         numButton.innerHTML = "<a>" + numButtonLabel + "</a>";
         pageNumbers.appendChild(numButton);
         upDatePagination(numButton, numButtonLabel);
-    }  
-    if (overFlow != 0){
-        var lastPageLink = document.createElement("li");
-        var lastPageBottom = maxIndex;
-        var lastPageTop = numOfstudents - overFlow; 
-        lastPageLink.innerHTML =  "<a>" + extraPage + "</a>";
-        pageNumbers.appendChild(lastPageLink);
-        var omega = currentPage * 10 - 1;
-        var alpha = omega - 9;
-        lastPageLink.addEventListener("click",function(){
-                                      hideStudents(alpha,omega,studentList);
-        showStudents(lastPageTop,lastPageBottom,studentList);
-            currentPage = extraPage
-                                      });
-    };
+    }
 
 };
 var upDatePagination = function(clickedButton, label) {
     clickedButton.addEventListener("click", function() {
         //hide current page
-        if (currentPage == extraPage){clearLastPage()} else {
         bottomIndex = (currentPage * 10) - 1;
         topIndex = bottomIndex - 9;
         hideStudents(topIndex, bottomIndex, studentList);
-        }
         //show new page
         newBottom = (label * 10) - 1;
         newTop = newBottom - 9;
@@ -63,12 +50,6 @@ var upDatePagination = function(clickedButton, label) {
         currentPage = label;
     })
 }
-
-var clearLastPage = function(){
-    var extraPageTop = numOfstudents - overFlow;
-    hideStudents(extraPageTop,maxIndex,studentList); 
-}
-
 
 var addSearchWidget = function() {
     var searchWidget = document.createElement("div");
@@ -87,19 +68,14 @@ var addSearchWidget = function() {
     searchButton.addEventListener("click", function() {
         var searchTarget = searchString.value;
         if (searchTarget == ""){
-            var bottomReset = currentPage * 10 - 1;
-            var topReset = bottomReset - 9;
-            hideStudents(topReset,bottomReset,studentList);
-            showStudents(0,9,studentList);
-            currentPage = 1;
-            
+            alert ("please enter a valid search target in the search field and then click search");
           
         } else {
         var searchCompare = RegExp(searchTarget);
         var listTarget = "";
         var searchHit = 0;
         var hitList = []
-        for (x = 0; x <= maxIndex; x++) {
+        for (x = 0; x <= numOfstudents; x++) {
             listTarget = studentList[x].textContent;
             if (searchCompare.test(listTarget) == true) {
                 hitList[searchHit] = x;
@@ -108,7 +84,7 @@ var addSearchWidget = function() {
             }
 
         }
-        hideStudents(0, maxIndex, studentList)
+        hideStudents(0, numOfstudents, studentList)
         console.log(hitList);
         console.log(hitList.length);
         var limit = hitList.length - 1;
@@ -120,11 +96,10 @@ var addSearchWidget = function() {
 };
 
 
-
+var searchStudents = function() {};
 //main program logic
-
+hideStudents(9, numOfstudents, studentList);
 if (numOfstudents > 10) {
     addPagination();
-    hideStudents(10, maxIndex, studentList);
-    addSearchWidget();
 }
+addSearchWidget();
