@@ -11,7 +11,7 @@ var hitList = [];
 var searchDisplay = false;
 // functions
 var hideStudents = function(a, b, list) {
-    for (i = a; i <= b; i++) {
+    for (var i = a; i <= b; i++) {
         list[i].style.display = "none";
     }
 };
@@ -19,10 +19,10 @@ var showStudents = function(a, b, list) {
     if (currentPage == extraPage) {
         clearLastPage();
     }
-    if (searchDisplay = true) {
+    if (searchDisplay === true) {
         clearSearchResults();
     }
-    for (i = a; i <= b; i++) {
+    for (var i = a; i <= b; i++) {
         list[i].style.display = "block";
     }
 };
@@ -32,14 +32,14 @@ var addPagination = function() {
     var pageNumbers = document.createElement("ul");
     thePage[0].appendChild(paginationDiv);
     paginationDiv.appendChild(pageNumbers);
-    for (i = 1; i <= numOfpages; i++) {
+    for (var i = 1; i <= numOfpages; i++) {
         var numButtonLabel = i.toString();
         var numButton = document.createElement("li");
         numButton.innerHTML = "<a>" + numButtonLabel + "</a>";
         pageNumbers.appendChild(numButton);
         upDatePagination(numButton, numButtonLabel);
     }
-    if (overFlow != 0) {
+    if (overFlow !== 0) {
         var lastPageLink = document.createElement("li");
         var lastPageBottom = maxIndex;
         var lastPageTop = numOfstudents - overFlow;
@@ -50,32 +50,32 @@ var addPagination = function() {
         lastPageLink.addEventListener("click", function() {
             hideStudents(alpha, omega, studentList);
             showStudents(lastPageTop, lastPageBottom, studentList);
-            currentPage = extraPage
+            currentPage = extraPage;
         });
-    };
+    }
 };
 var upDatePagination = function(clickedButton, label) {
     clickedButton.addEventListener("click", function() {
         //hide current page
         if (currentPage == extraPage) {
-            clearLastPage()
+            clearLastPage();
         } else {
-            bottomIndex = (currentPage * 10) - 1;
-            topIndex = bottomIndex - 9;
+            var bottomIndex = (currentPage * 10) - 1;
+            var topIndex = bottomIndex - 9;
             hideStudents(topIndex, bottomIndex, studentList);
         }
         //show new page
-        newBottom = (label * 10) - 1;
-        newTop = newBottom - 9;
+        var newBottom = (label * 10) - 1;
+        var newTop = newBottom - 9;
         showStudents(newTop, newBottom, studentList);
         //make new page current page
         currentPage = label;
-    })
-}
+    });
+};
 var clearLastPage = function() {
     var extraPageTop = numOfstudents - overFlow;
     hideStudents(extraPageTop, maxIndex, studentList);
-}
+};
 var addSearchWidget = function() {
     var searchWidget = document.createElement("div");
     searchWidget.setAttribute("class", "student-search");
@@ -91,30 +91,30 @@ var addSearchWidget = function() {
     var theHeader = document.getElementsByClassName("page-header cf");
     theHeader[0].appendChild(searchWidget);
     searchButton.addEventListener("click", function() {
-        if (searchDisplay == true){
+        if (searchDisplay === true){
             clearSearchResults();
         }
         var searchTarget = searchString.value;
-        if (searchTarget == "") {
+        if (searchTarget === "") {
             var bottomReset = currentPage * 10 - 1;
             var topReset = bottomReset - 9;
             hideStudents(0, 52, studentList);
-            showStudents(0, 9, studentList);
+            showStudents(topReset,bottomReset, studentList);
             currentPage = 1;
         } else {
-            var searchCompare = RegExp(searchTarget);
+            var searchCompare = RegExp(searchTarget,"i");
             var listTarget = "";
             var searchHit = 0;
-            for (x = 0; x <= maxIndex; x++) {
+            for (var x = 0; x <= maxIndex; x++) {
                 listTarget = studentList[x].textContent;
-                if (searchCompare.test(listTarget) == true) {
+                if (searchCompare.test(listTarget) === true) {
                     hitList[searchHit] = x;
                     searchHit = searchHit + 1;
                 }
            }
-            hideStudents(0, maxIndex, studentList)
+            hideStudents(0, maxIndex, studentList);
             var limit = hitList.length - 1;
-            for (y = 0; y <= limit; y++) {
+            for (var y = 0; y <= limit; y++) {
                 studentList[hitList[y]].style.display = "block";
             }
             searchDisplay = true;
@@ -122,12 +122,12 @@ var addSearchWidget = function() {
     });
 };
 var clearSearchResults = function() {
-    maxHit = hitList.length-1;
-    for (x = 0; x <= maxHit; x++) {
+    var maxHit = hitList.length-1;
+    for (var x = 0; x <= maxHit; x++) {
         studentList[hitList[x]].style.display = "none";
     }
     hitList.lenghth = 0;
-}
+};
 //main program logic
 if (numOfstudents > 10) {
     addPagination();
