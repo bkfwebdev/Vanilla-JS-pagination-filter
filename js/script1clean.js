@@ -16,7 +16,7 @@ var hideStudents = function(a, b, list) {
     }
 };
 var showStudents = function(a, b, list) {
-    if (currentPage == extraPage) {
+    if (currentPage === extraPage) {
         clearLastPage();
     }
     if (searchDisplay === true) {
@@ -41,14 +41,14 @@ var addPagination = function() {
     }
     if (overFlow !== 0) {
         var lastPageLink = document.createElement("li");
-        var lastPageBottom = maxIndex;
+        var lastPageBottom = maxIndex; 
         var lastPageTop = numOfstudents - overFlow;
         lastPageLink.innerHTML = "<a>" + extraPage + "</a>";
-        pageNumbers.appendChild(lastPageLink);
-        var omega = currentPage * 10 - 1;
-        var alpha = omega - 9;
+        pageNumbers.appendChild(lastPageLink); 
+        var cpb = currentPage * 10 - 1;
+        var cpt = cpb - 9;
         lastPageLink.addEventListener("click", function() {
-            hideStudents(alpha, omega, studentList);
+            hideStudents(cpt, cpb, studentList);
             showStudents(lastPageTop, lastPageBottom, studentList);
             currentPage = extraPage;
         });
@@ -127,7 +127,7 @@ var clearSearchResults = function() {
         studentList[hitList[x]].style.display = "none";
     }
     hitList.lenghth = 0;
-};
+}; 
 //main program logic
 if (numOfstudents > 10) {
     addPagination();
