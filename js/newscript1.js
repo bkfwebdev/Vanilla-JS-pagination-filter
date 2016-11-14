@@ -52,6 +52,7 @@ var clearSearchResults = function() {
     for (var x = 0; x <= maxHit; x++) {
         studentList[hitList[x]].style.display = "none";
     }
+	hitList.length = 0;
 };
 
 var addSearchWidget = function() {
@@ -73,8 +74,8 @@ var addSearchWidget = function() {
             clearSearchResults();
         }
         var searchTarget = searchString.value;
-        if (searchTarget === placeHolder){
-		console.log("no search target");
+        if (searchTarget === ""){
+		resetPage();
 			}else{
             var searchCompare = RegExp(searchTarget,"i");
             var listTarget = "";
@@ -86,14 +87,15 @@ var addSearchWidget = function() {
                     searchHit = searchHit + 1;
                 }
            }
+		   if (searchHit === 0)
+		   { 
+		   alert("There were no matches for your search.");
+		   } else {
             hideEverything();
             showSearchResults();
-            var limit = hitList.length - 1;
-            for (var y = 0; y <= limit; y++) {
-                studentList[hitList[y]].style.display = "block";
-            }
             searchDisplay = true;
 			paginationSwitch(false);
+		   }
         }
     });
 };
@@ -176,6 +178,12 @@ var showLastPage = function(){
 	 }
 	
 };
+
+var resetPage = function(){
+	hideEverything();
+	showPage(1,studentList);
+	paginationSwitch(true);
+}
 
 // main program logic
 if (numOfpages > 1){
