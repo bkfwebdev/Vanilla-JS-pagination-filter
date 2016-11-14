@@ -13,13 +13,6 @@ var hitList = [];
 var searchDisplay = false;
 
 // functions
-
-var hideEverything  = function(){
-	for (var x = 0;x <= maxIndex; x++ ){
-		studentList[x].style.display = "none";
-	}
-};
-
 var hidePage = function(pgnum,pglist){
 	if (pgnum === lastPage){
 		hideLastPage();
@@ -33,9 +26,6 @@ var hidePage = function(pgnum,pglist){
 };
 
 var showPage = function (pgnum,pglist){
-	if (searchDisplay === true){
-		clearSearchResults();
-	}
 	if (pgnum === lastPage){
 		showLastPage();
 	}else{
@@ -45,13 +35,6 @@ var showPage = function (pgnum,pglist){
 		pglist[x].style.display = "block";
 	}
 	}
-};
-
-var clearSearchResults = function() {
-    var maxHit = hitList.length-1;
-    for (var x = 0; x <= maxHit; x++) {
-        studentList[hitList[x]].style.display = "none";
-    }
 };
 
 var addSearchWidget = function() {
@@ -73,9 +56,9 @@ var addSearchWidget = function() {
             clearSearchResults();
         }
         var searchTarget = searchString.value;
-        if (searchTarget === placeHolder){
-		console.log("no search target");
-			}else{
+        if (searchTarget === "") {
+          resetPage();
+        } else {
             var searchCompare = RegExp(searchTarget,"i");
             var listTarget = "";
             var searchHit = 0;
@@ -87,13 +70,11 @@ var addSearchWidget = function() {
                 }
            }
             hideEverything();
-            showSearchResults();
             var limit = hitList.length - 1;
             for (var y = 0; y <= limit; y++) {
                 studentList[hitList[y]].style.display = "block";
             }
             searchDisplay = true;
-			paginationSwitch(false);
         }
     });
 };
@@ -101,7 +82,6 @@ var addSearchWidget = function() {
 var addPageButtons = function() {
     var paginationDiv = document.createElement("div");
     paginationDiv.setAttribute("class", "pagination");
-    paginationDiv.setAttribute("id","mainpagination");
     var pageNumbers = document.createElement("ul");
     thePage[0].appendChild(paginationDiv);
     paginationDiv.appendChild(pageNumbers);
@@ -145,20 +125,20 @@ var upDatePagination = function(clickedButton, label) {
     });
 };
 
-var paginationSwitch = function (paginationbool) {
-	var mainPagination = document.getElementById("mainpagination");
-	if (paginationbool === true){
-	mainPagination.style.display = "block";
-} else {
-	mainPagination.style.display = "none";
-}
-};
-
 var showSearchResults = function() {
     var maxHit = hitList.length-1;
     for (var x = 0; x <= maxHit; x++) {
         studentList[hitList[x]].style.display = "block";
-    }   
+    }
+    hitList.lenghth = 0;
+};
+
+var clearSearchResults = function() {
+    var maxHit = hitList.length-1;
+    for (var x = 0; x <= maxHit; x++) {
+        studentList[hitList[x]].style.display = "none";
+    }
+    hitList.lenghth = 0;
 };
 
  var hideLastPage = function(){
@@ -177,6 +157,26 @@ var showLastPage = function(){
 	
 };
 
+
+var resetPage = function(){
+	for (var x=2;x<=numOfpages; x++){
+		hidePage(x);
+	}
+	hideLastPage();
+	addPagebuttons();
+	addSearchWidget();
+};
+
+// var switchPagination
+
+// var paginateSearch 
+
+var hideEverything  = function(){
+	for (var x = 0;x <= maxIndex; X++ ){
+		studentList[x].style.display = "none";
+	}
+};
+
 // main program logic
 if (numOfpages > 1){
 	for(var x = 2; x<= numOfpages; x++){
@@ -185,4 +185,4 @@ if (numOfpages > 1){
 	hideLastPage();
 	addPageButtons();
 	addSearchWidget();
-	} 
+	}
